@@ -21,16 +21,16 @@ const Main = () => {
     }, []);
 
     const cards = useMemo(() => {
-        return industryItems.map((item, index) => (
-                <IndustryItemCard key={index} industryListItem={item} maxCompanies={6} />
+        return industryItems.map((item) => (
+                <IndustryItemCard key={item.industry.id} industryListItem={item} maxCompanies={6} />
             )
         );
     }, [industryItems]);
 
     return (
-        <div className="bg-gray-200 h-full w-screen">
+        <div className="bg-gray-200 h-full w-screen p-3">
             <div className="py-8 px-6">
-                <h1 className="font-bold text-2xl">Industries overview</h1>
+                <h1 className="font-bold text-2xl">Industries</h1>
             </div>
             <div className="flex flex-wrap justify-center ">
                 {isLoading ? <Spinner/> : cards}

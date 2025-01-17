@@ -1,4 +1,4 @@
-import { IndustryItemsResponse, IndustryListItem, Industry, Company } from "../shared/types/shared.types.ts";
+import {Company, Industry, IndustryItemsResponse, IndustryListItem} from "../shared/types/shared.types.ts";
 
 export const IndustryItemsDataHelper = (data: IndustryItemsResponse): IndustryListItem[] => {
     const map = new Map<number, { industry: Industry; companies: Company[] }>();
@@ -11,7 +11,7 @@ export const IndustryItemsDataHelper = (data: IndustryItemsResponse): IndustryLi
             total_jobs_available: item.total_jobs_available,
         };
 
-        item.industries.forEach((industry) => {
+        item.industries.forEach((industry: Industry) => {
             // Initialize industry if the industry is not defined
             if (!map.has(industry.id)) {
                 map.set(industry.id, { industry, companies: [] });
@@ -21,5 +21,11 @@ export const IndustryItemsDataHelper = (data: IndustryItemsResponse): IndustryLi
         });
     });
 
-    return Array.from(map.values());
+    // Sort companies alphabetically
+    return Array.from(map.values()).map((item) => {
+        return {
+            industry: item.industry,
+            companies: item.companies.sort((a, b) => a.name.localeCompare(b.name)),
+        };
+    });
 };

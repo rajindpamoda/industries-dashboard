@@ -13,6 +13,11 @@ const styles = {
 }
 
 const IndustryItemCard = ({ industryListItem, maxCompanies }: IndustryItemCardProps) => {
+    const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+        e.target.onerror = null;
+        e.target.src = './assets/img/logo-placeholder.jpg';
+    };
+
     const companiesList = useMemo(() => {
         return industryListItem.companies.slice(0, maxCompanies).map((company, index) => {
             return (
@@ -23,10 +28,7 @@ const IndustryItemCard = ({ industryListItem, maxCompanies }: IndustryItemCardPr
                             alt="logo"
                             className="max mr-1"
                             style={styles.companyLogo}
-                            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                                e.target.onerror = null;
-                                e.target.src = './assets/img/logo-placeholder.jpg';
-                            }}
+                            onError={handleImgError}
                         />
                         <div className="font-medium">{company.name}</div>
                     </div>
