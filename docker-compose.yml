@@ -5,6 +5,7 @@ services:
       dockerfile: ./Dockerfile # React's Dockerfile
     ports:
       - "3000:80"
+    container_name: industries-dashboard-frontend
     depends_on:
       - backend
 
@@ -12,5 +13,6 @@ services:
     build:
       context: ./server
       dockerfile: ./Dockerfile # Server's Dockerfile
+    container_name: industries-dashboard-backend
     ports:
       - "5001:5000"
