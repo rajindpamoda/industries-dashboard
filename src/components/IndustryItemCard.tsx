@@ -22,7 +22,7 @@ const IndustryItemCard = ({ industryListItem, maxCompanies }: IndustryItemCardPr
     const companiesList = useMemo(() => {
         return industryListItem.companies.slice(0, maxCompanies).map((company) => {
             return (
-                <div key={company.id} className="flex flex-wrap w-full text-xs pb-1 ">
+                <div key={company.id} className="flex flex-wrap w-full text-xs pb-1 items-center">
                     <div className="text-left w-1/2 flex my-2 items-center">
                         <img
                             src={company.images['32x32']}
