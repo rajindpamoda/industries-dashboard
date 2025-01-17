@@ -14,14 +14,15 @@ const styles = {
 
 const IndustryItemCard = ({ industryListItem, maxCompanies }: IndustryItemCardProps) => {
     const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-        e.target.onerror = null;
-        e.target.src = './assets/img/logo-placeholder.jpg';
+        const target = e.target as HTMLImageElement;
+        target.onerror = null;
+        target.src = './assets/img/logo-placeholder.jpg';
     };
 
     const companiesList = useMemo(() => {
-        return industryListItem.companies.slice(0, maxCompanies).map((company, index) => {
+        return industryListItem.companies.slice(0, maxCompanies).map((company) => {
             return (
-                <div key={index} className="flex flex-wrap w-full text-xs pb-1 ">
+                <div key={company.id} className="flex flex-wrap w-full text-xs pb-1 ">
                     <div className="text-left w-1/2 flex my-2 items-center">
                         <img
                             src={company.images['32x32']}

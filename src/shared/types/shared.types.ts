@@ -22,6 +22,7 @@ export type IndustryItemsResponse = {
 }
 
 export type Company = {
+    id: string;
     name: string;
     tagline: string;
     images: Record<string, string>;

@@ -1,10 +1,11 @@
 import {Company, Industry, IndustryItemsResponse, IndustryListItem} from "../shared/types/shared.types.ts";
 
 export const IndustryItemsDataHelper = (data: IndustryItemsResponse): IndustryListItem[] => {
-    const map = new Map<number, { industry: Industry; companies: Company[] }>();
+    const map = new Map<number, { industry: Industry; companies: Map<string, Company> }>();
 
     data.items.forEach((item) => {
         const company: Company = {
+            id: item.uuid,
             name: item.name,
             tagline: item.tagline,
             images: item.images,
@@ -14,10 +15,14 @@ export const IndustryItemsDataHelper = (data: IndustryItemsResponse): IndustryLi
         item.industries.forEach((industry: Industry) => {
             // Initialize industry if the industry is not defined
             if (!map.has(industry.id)) {
-                map.set(industry.id, { industry, companies: [] });
+                map.set(industry.id, { industry, companies: new Map() });
             }
 
-            map.get(industry.id)?.companies.push(company);
+            // Handle data duplications
+            const content = map.get(industry.id)!;
+            if (!content.companies.has(company.id)) {
+                content.companies.set(company.id, company)
+            }
         });
     });
 
@@ -25,7 +30,7 @@ export const IndustryItemsDataHelper = (data: IndustryItemsResponse): IndustryLi
     return Array.from(map.values()).map((item) => {
         return {
             industry: item.industry,
-            companies: item.companies.sort((a, b) => a.name.localeCompare(b.name)),
+            companies: Array.from(item.companies.values()).sort((a, b) => a.name.localeCompare(b.name)),
         };
     });
 };
