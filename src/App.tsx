@@ -1,5 +1,5 @@
 import './App.css'
-import Main from "./pages/Main/Main.tsx";
+import Main from "./pages/Main.tsx";
 
 function App() {
   return (

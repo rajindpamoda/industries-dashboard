@@ -1,4 +1,4 @@
-import {IndustryItemsDataHelper} from "../util/industryitems.datahelper.ts";
+import {transformAndOrganizeIndustryData} from "../util/industryitems.datahelper.ts";
 import {IndustryItemsResponse, IndustryListItem} from "../shared/types/shared.types.ts";
 
 describe('IndustryItemsDataHelper', () => {
@@ -59,7 +59,7 @@ describe('IndustryItemsDataHelper', () => {
             }
         ];
 
-        const transformedData = IndustryItemsDataHelper(mockData);
+        const transformedData = transformAndOrganizeIndustryData(mockData);
         expect(transformedData).toEqual(expectedTransformedData);
     });
 });

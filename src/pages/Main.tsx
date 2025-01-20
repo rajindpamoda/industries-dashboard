@@ -1,9 +1,9 @@
-import ItemsService from "../../services/items.service.ts";
+import ItemsService from "../services/items.service.ts";
 import {useEffect, useMemo, useState} from "react";
-import {IndustryItemsResponse, IndustryListItem} from "../../shared/types/shared.types.ts";
-import {IndustryItemsDataHelper} from "../../util/industryitems.datahelper.ts";
-import IndustryItemCard from "../../components/IndustryItemCard.tsx";
-import Spinner from "../../shared/components/Spinner.tsx";
+import {IndustryItemsResponse, IndustryListItem} from "../shared/types/shared.types.ts";
+import {transformAndOrganizeIndustryData} from "../util/industryitems.datahelper.ts";
+import IndustryItemCard from "../components/IndustryItemCard.tsx";
+import Spinner from "../shared/components/Spinner.tsx";
 
 const Main = () => {
     const [industryItems, setIndustryItems] = useState<IndustryListItem[]>([]);
@@ -12,7 +12,7 @@ const Main = () => {
     useEffect(() => {
         const fetchIndustryItems = async () => {
             const response = await ItemsService.get();
-            const items = IndustryItemsDataHelper(response.data as IndustryItemsResponse);
+            const items = transformAndOrganizeIndustryData(response.data as IndustryItemsResponse);
             setIndustryItems(items);
             setIsLoading(false);
         };
@@ -22,7 +22,7 @@ const Main = () => {
 
     const cards = useMemo(() => {
         return industryItems.map((item) => (
-                <IndustryItemCard key={item.industry.id} industryListItem={item} maxCompanies={6} />
+                <IndustryItemCard key={item.industry.id} industryListItem={item} showInitialCompanies={6} />
             )
         );
     }, [industryItems]);
