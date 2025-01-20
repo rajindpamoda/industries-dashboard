@@ -8,13 +8,20 @@ import Spinner from "../shared/components/Spinner.tsx";
 const Main = () => {
     const [industryItems, setIndustryItems] = useState<IndustryListItem[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchIndustryItems = async () => {
-            const response = await ItemsService.get();
-            const items = transformAndOrganizeIndustryData(response.data as IndustryItemsResponse);
-            setIndustryItems(items);
-            setIsLoading(false);
+            try {
+                const response = await ItemsService.get();
+                const items = transformAndOrganizeIndustryData(response.data as IndustryItemsResponse);
+                setIndustryItems(items);
+            } catch (e) {
+                setError("Failed to load industry items. Please try again.");
+                console.error(`Error! ${e}`)
+            } finally {
+                setIsLoading(false);
+            }
         };
 
         fetchIndustryItems();
@@ -33,7 +40,13 @@ const Main = () => {
                 <h1 className="font-bold text-2xl">Industries</h1>
             </div>
             <div className="flex flex-wrap justify-center ">
-                {isLoading ? <Spinner/> : cards}
+                {isLoading && <Spinner />}
+                {error && (
+                    <div className="bg-red-100 text-red-800 border border-red-300 rounded-md p-3 mb-4">
+                        {error}
+                    </div>
+                )}
+                {!isLoading && !error && cards}
             </div>
         </div>
     );

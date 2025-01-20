@@ -6,4 +6,6 @@
 
 body {
     color: #18181B;
+    min-height: 100vh;
+    background-color: rgb(229, 231, 235);
 }
