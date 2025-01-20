@@ -1,6 +1,6 @@
 export const AppConfig = {
     API: {
-        BASE_URL: 'http://localhost:5001/api/',
+        BASE_URL: 'http://localhost:8000/',
         VERSION: 'v1',
     }
 }
