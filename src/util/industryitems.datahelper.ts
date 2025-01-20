@@ -1,6 +1,10 @@
 import {Company, Industry, IndustryItemsResponse, IndustryListItem} from "../shared/types/shared.types.ts";
 
-export const IndustryItemsDataHelper = (data: IndustryItemsResponse): IndustryListItem[] => {
+/**
+ * Transforms and organizes industry data by grouping companies under their respective industries,
+ * while removing duplicate entries and sorting companies alphabetically.
+ */
+export const transformAndOrganizeIndustryData = (data: IndustryItemsResponse): IndustryListItem[] => {
     const map = new Map<number, { industry: Industry; companies: Map<string, Company> }>();
 
     data.items.forEach((item) => {
